@@ -1,4 +1,6 @@
 import random
+from termcolor import colored
+from simpleeval import simple_eval
 import time
 
 class Bot:
@@ -14,7 +16,7 @@ class Bot:
     
     def _say(self, s):
         time.sleep(Bot.wait)
-        print(s)
+        print(colored(s, 'yellow'))
     
     def run(self):
         self._say(self.q)
@@ -49,10 +51,22 @@ class FavoriteColorBot(Bot):
         colors = ['red','orange','yellow','green','blue','indigo','purple']
         return f'You like {s}? That is a great color, My favorite color is {random.choice(colors)}. '
 
-h = HelloBot()
-g = GreetingBot() 
-f = FavoriteColorBot() 
+class CalcBot(Bot):
+    
+    def __init__(self):
+        self.q = 'Through recent upgrade I can do calculation now, input some arithmetic expression to try.'
 
-h.run()
-g.run()
-f.run()
+    def _think(self, s):
+        result = simple_eval(s)
+        return f'Done.Result = {result}'
+
+
+
+if __name__ == '__main__': 
+    h = HelloBot()
+    g = GreetingBot() 
+    f = FavoriteColorBot() 
+
+    h.run()
+    g.run()
+    f.run()
